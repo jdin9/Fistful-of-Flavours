@@ -66,6 +66,34 @@ check_registry() {
   return 0
 }
 
+run_npm_install() {
+  local log_file
+  log_file=$(mktemp)
+
+  set +e
+  npm install "$@" 2>&1 | tee "$log_file"
+  local npm_status=${PIPESTATUS[0]}
+  set -e
+
+  if [[ $npm_status -eq 0 ]]; then
+    rm -f "$log_file"
+    return 0
+  fi
+
+  if grep -qiE '\b(403|E403|EAI_AGAIN|ECONN|ETIMEDOUT|ENOTFOUND|EHOSTUNREACH|ECONNRESET)\b' "$log_file"; then
+    rm -f "$log_file"
+    return 10
+  fi
+
+  rm -f "$log_file"
+  return $npm_status
+}
+
+skip_install_notice() {
+  echo "Network unavailable — skipping dependency installation. You can install manually later with \`npm install\`."
+  exit 0
+}
+
 # Try with the original proxy configuration first.
 for var in "${PROXY_VARS[@]}"; do
   remember_current_env "$var"
@@ -73,8 +101,17 @@ done
 
 if check_registry; then
   echo "Bootstrap: registry reachable with existing proxy configuration."
-  npm install "$@"
-  exit 0
+  if run_npm_install "$@"; then
+    exit 0
+  fi
+
+  install_status=$?
+  if [[ $install_status -eq 10 ]]; then
+    echo "Bootstrap: npm install failed due to network or proxy issues."
+  else
+    echo "Bootstrap: npm install failed with exit code $install_status."
+    exit "$install_status"
+  fi
 fi
 
 echo "Bootstrap: attempting install after clearing proxy variables that may block the registry."
@@ -82,11 +119,17 @@ echo "Bootstrap: attempting install after clearing proxy variables that may bloc
 clear_proxies
 
 if check_registry; then
-  npm install "$@"
-  exit 0
+  if run_npm_install "$@"; then
+    exit 0
+  fi
+
+  install_status=$?
+  if [[ $install_status -eq 10 ]]; then
+    skip_install_notice
+  fi
+
+  echo "Bootstrap: npm install failed with exit code $install_status."
+  exit "$install_status"
 fi
 
-cat <<'EONOTICE'
-Bootstrap: Unable to reach https://registry.npmjs.org/ with or without the configured proxies.
-Bootstrap: Skipping npm install. Re-run this script once you have connectivity to proceed with dependency installation.
-EONOTICE
+skip_install_notice
