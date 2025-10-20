@@ -1,0 +1,10 @@
+export const MIN_MEAL_BUDGET = 150;
+export const SUGGESTED_MEAL_BUDGET = 200;
+export const MIN_WINE_BUDGET = 75;
+export const SUGGESTED_WINE_BUDGET = 115;
+export const MIN_GUESTS = 2;
+export const MAX_GUESTS = 6;
+export const DEPOSIT = 75;
+export const MINIMUM_NOTICE_DAYS = 21;
+export const NEIGHBOURHOODS = ["Queen West", "King West", "Yorkville", "Harbourfront"] as const;
+export const VIBES = ["Cozy", "Trendy", "Elegant", "Surprise"] as const;
