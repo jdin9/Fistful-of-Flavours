@@ -29,6 +29,7 @@ const config: Config = {
         background: "var(--bg)",
         card: "var(--card)",
         text: "var(--text)",
+        "text-soft": "var(--text-soft)",
         muted: "var(--muted)",
         primary: "var(--primary)",
         "primary-600": "var(--primary-600)",
