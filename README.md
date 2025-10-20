@@ -9,7 +9,7 @@ npm run bootstrap
 npm run dev
 ```
 
-The `bootstrap` helper clears any proxy settings that might block access to the public npm registry (we saw `403 Forbidden` errors in CI when a corporate-style proxy was injected into the environment). If your own network setup is already able to reach `registry.npmjs.org`, a plain `npm install` still works. When the registry cannot be reached (such as in offline CI), the script will skip the install step and remind you to run `npm install` once connectivity is restored.
+The `bootstrap` helper first attempts to install dependencies using whatever proxy settings are already configured (helpful inside locked-down corporate networks). If that cannot reach `registry.npmjs.org`, it temporarily clears the proxy variables and retries. When neither configuration works—such as in an offline CI run—it skips the install step and reminds you to run `npm install` once connectivity is restored.
 
 The app lives at [http://localhost:3000](http://localhost:3000).
 
