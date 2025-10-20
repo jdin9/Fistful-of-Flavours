@@ -8,6 +8,7 @@
     --bg: #fafafa;
     --card: #ffffff;
     --text: #202124;
+    --text-soft: rgba(32, 33, 36, 0.9);
     --muted: #9ca3af;
     --primary: #1f8a70;
     --primary-600: #157a61;
@@ -22,6 +23,7 @@
     --bg: #0b0b0c;
     --card: #111113;
     --text: #f6f6f7;
+    --text-soft: rgba(246, 246, 247, 0.9);
     --muted: #9ca3af;
     --primary: #1f8a70;
     --primary-600: #157a61;
@@ -76,7 +78,7 @@
   }
 
   .text-body {
-    @apply text-base leading-relaxed text-text/90;
+    @apply text-base leading-relaxed text-text-soft;
   }
 
   .text-eyebrow {
