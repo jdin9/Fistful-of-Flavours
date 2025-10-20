@@ -5,9 +5,11 @@ A boutique Next.js (App Router) + TypeScript experience for booking curated mult
 ## Getting started
 
 ```bash
-npm install
+npm run bootstrap
 npm run dev
 ```
+
+The `bootstrap` helper first attempts to install dependencies using whatever proxy settings are already configured (helpful inside locked-down corporate networks). If that cannot reach `registry.npmjs.org`, it temporarily clears the proxy variables and retries. When neither configuration works—such as in an offline CI run—it skips the install step and reminds you to run `npm install` once connectivity is restored.
 
 The app lives at [http://localhost:3000](http://localhost:3000).
 
@@ -46,6 +48,7 @@ The app lives at [http://localhost:3000](http://localhost:3000).
 ## Scripts
 
 - `npm run dev` – Start the development server
+- `npm run bootstrap` – Install dependencies after clearing problematic proxy settings
 - `npm run build` – Create an optimized production build
 - `npm start` – Run the production build locally
 - `npm run lint` – Run ESLint
