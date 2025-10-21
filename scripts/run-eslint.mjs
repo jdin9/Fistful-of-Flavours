@@ -20,8 +20,6 @@ const eslintArgs = process.argv.slice(2);
 const defaultArgs = [
   "--max-warnings=0",
   "--no-error-on-unmatched-pattern",
-  "--ext",
-  ".js,.jsx,.ts,.tsx",
   "app",
   "components",
   "lib",
