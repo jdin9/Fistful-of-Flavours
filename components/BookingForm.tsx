@@ -34,7 +34,6 @@ import {
   MIN_WINE_BUDGET,
   NEIGHBOURHOODS,
   SUGGESTED_MEAL_BUDGET,
-  SUGGESTED_WINE_BUDGET,
   VIBES
 } from "@/lib/constants";
 import {
@@ -97,7 +96,7 @@ export function BookingForm() {
       contact: {
         bookerName: "",
         bookerEmail: "",
-        partyPhoneNumbers: ["", ""],
+        partyPhoneNumbers: [""],
         neighborhood: NEIGHBOURHOODS[0],
         date: defaultIsoDate,
         time: DEFAULT_EVENT_TIME
@@ -118,7 +117,7 @@ export function BookingForm() {
         mealBudgetPerPersonMax: SUGGESTED_MEAL_BUDGET,
         winePairings: {
           include: false,
-          budgetPerPersonMax: SUGGESTED_WINE_BUDGET
+          budgetPerPersonMax: MIN_WINE_BUDGET
         }
       },
       policyAcknowledgements: {
@@ -369,6 +368,10 @@ export function BookingForm() {
                   )}
                 </FormField>
               </div>
+              <div className="rounded-2xl border border-white/10 bg-card/70 p-4 text-xs text-text/75">
+                You’ll only be billed for what the evening actually costs—for example, if it lands at $185 per guest, that’s
+                what you pay. Your ceiling already includes tax and tip, and the $75 booking deposit is the only additional fee.
+              </div>
             </CardContent>
           </Card>
 
@@ -392,7 +395,7 @@ export function BookingForm() {
                       className="h-5 w-5 rounded border-zinc-300 text-primary focus:ring-2 focus:ring-ring"
                       {...form.register("party.mobilityNeeds")}
                     />
-                    <span className="text-sm text-text/80">Check if anyone prefers elevators, minimal walking, or step-free access.</span>
+                    <span className="text-sm text-text/80">Check if anyone requires elevators, minimal walking, or step-free access.</span>
                   </div>
                 )}
               </FormField>
@@ -407,7 +410,7 @@ export function BookingForm() {
                     id={id}
                     aria-describedby={describedBy}
                     rows={4}
-                    placeholder="Two guests prefer limited stairs; please avoid narrow patios."
+                    placeholder="Two guests are in wheelchairs, one guest has a service dog, etc."
                     {...form.register("party.accessibilityNotes")}
                   />
                 )}
@@ -423,7 +426,7 @@ export function BookingForm() {
             <CardContent className="space-y-6">
               <FormField
                 htmlFor="vibe"
-                label="Preferred vibe"
+                label="Vibe"
                 required
                 error={errors.preferences?.vibe?.message}
               >
@@ -508,7 +511,7 @@ export function BookingForm() {
                     id={id}
                     aria-describedby={describedBy}
                     rows={4}
-                    placeholder="Cozy rooms with vinyl, shareable plates, lots of storytelling from the staff."
+                    placeholder="Warm lighting, attentive hosts, thoughtful storytelling throughout the meal."
                     {...form.register("preferences.likesAboutRestaurants")}
                   />
                 )}
@@ -525,7 +528,7 @@ export function BookingForm() {
                     id={id}
                     aria-describedby={describedBy}
                     rows={3}
-                    placeholder="One guest is pescatarian; everyone avoids peanuts."
+                    placeholder="No dairy, no gluten, no tree nuts, etc."
                     {...form.register("preferences.dietaryRestrictions")}
                   />
                 )}
@@ -543,7 +546,7 @@ export function BookingForm() {
                 htmlFor="mealBudget"
                 label="Meal budget per guest"
                 required
-                hint={`Minimum $${MIN_MEAL_BUDGET}. We suggest ~ $${SUGGESTED_MEAL_BUDGET}.`}
+                hint={`Minimum $${MIN_MEAL_BUDGET}. We suggest around $${SUGGESTED_MEAL_BUDGET} per guest for the perfect amount of dishes and best results.`}
                 error={errors.pricing?.mealBudgetPerPersonMax?.message}
               >
                 {({ id, describedBy }) => (
@@ -581,7 +584,7 @@ export function BookingForm() {
                     htmlFor="wineBudget"
                     label="Wine budget per guest"
                     required
-                    hint={`Minimum $${MIN_WINE_BUDGET}. We suggest ~ $${SUGGESTED_WINE_BUDGET}.`}
+                    hint={`Minimum $${MIN_WINE_BUDGET}. That total covers pours across all restaurants (about $20–25 at each stop).`}
                     error={errors.pricing?.winePairings?.budgetPerPersonMax?.message}
                   >
                     {({ id, describedBy }) => (
@@ -679,7 +682,7 @@ export function BookingForm() {
                     id={id}
                     aria-describedby={describedBy}
                     rows={4}
-                    placeholder="Celebrating a 5-year anniversary; would love a dessert finale with candles."
+                    placeholder="Celebrating a 5-year anniversary; hoping for a surprise toast at the final stop."
                     {...form.register("misc.notes")}
                   />
                 )}
@@ -739,7 +742,8 @@ export function BookingForm() {
                 </div>
               </div>
               <div className="rounded-xl border border-white/10 bg-card/80 p-4 text-xs text-text/75">
-                Final balance will be emailed later based on actual spend (for example, $154.85 per person).
+                Final balance is based on the actual spend—for example, if dinner lands at $185 per guest, that’s what you’re
+                charged. Tax and tip are baked into your ceiling, with only the $75 deposit collected up front.
               </div>
             </CardContent>
             <CardFooter>

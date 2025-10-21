@@ -74,8 +74,11 @@ export const PhoneListField = () => {
         onClick={() => append("")}
         disabled={maxReached}
       >
-        Add another number
+        Add additional number
       </Button>
+      <p className="text-xs text-text/70">
+        We recommend adding the phone number for every guest—these contacts receive departure reminders and next-location updates.
+      </p>
       {maxReached && <p className="text-xs text-muted">You can add up to 5 contacts.</p>}
     </div>
   );
