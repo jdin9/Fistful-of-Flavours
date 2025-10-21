@@ -13,6 +13,7 @@ const sharedGlobals = {
   clearTimeout: "readonly",
   setInterval: "readonly",
   clearInterval: "readonly",
+  Intl: "readonly",
   URL: "readonly",
   URLSearchParams: "readonly",
   process: "readonly",
